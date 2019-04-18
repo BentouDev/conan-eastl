@@ -50,15 +50,11 @@ def build(channel, commit, password, version):
         else:
             compiler = "gcc"
 
-    settings = {"arch": "x86_64"}
-
+    builder.add_common_builds()
     if compiler:
-        settings['compiler'] = compiler
-
-    builder.add(settings=settings,
-                options={},
-                env_vars={},
-                build_requires={})
+        builder.remove_build_if(lambda build: build.settings['compiler'] != compiler or build.settings['arch'] != "x86_64")
+    else:
+        builder.remove_build_if(lambda build: build.settings['arch'] != "x86_64")
 
     builder.run()
 
