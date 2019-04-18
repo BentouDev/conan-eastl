@@ -12,10 +12,10 @@ def createBuilder(channel, commit, password, version):
     username = "bentoudev"
     build_types = ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"],
 
-    if not "CONAN_VISUAL_VERSION" in os.environ:
+    if not "CONAN_VISUAL_VERSIONS" in os.environ:
         visual_versions = ["15","16"]
     else:
-        ver = os.environ["CONAN_VISUAL_VERSION"]
+        ver = os.environ["CONAN_VISUAL_VERSIONS"]
         visual_versions = [ver]
         print(" [info] Selected Visual Studio version " + ver)
 
