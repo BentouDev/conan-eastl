@@ -7,6 +7,8 @@ DEBUG_MODE = False
 GIT_DIR = "eastl-source"
 STABLE_IN_GIT = True
 
+# build_types = ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"],
+
 def createBuilder(channel, commit, password, version):
     branch_pattern = 'release*' # channel is set explicitly!
     username = "bentoudev"
@@ -33,8 +35,6 @@ def createBuilder(channel, commit, password, version):
                 visual_versions=visual_versions)
 
 def build(channel, commit, password, version):
-    build_types = ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"],
-
     os.environ['EASTL_COMMIT'] = commit
     os.environ['EASTL_VERSION'] = version
 
@@ -52,9 +52,9 @@ def build(channel, commit, password, version):
 
     builder.add_common_builds()
     if compiler:
-        builder.remove_build_if(lambda build: build.settings['compiler'] != compiler or build.settings['arch'] != "x86_64" or build.settings['build_type'] not in build_types)
+        builder.remove_build_if(lambda build: build.settings['compiler'] != compiler or build.settings['arch'] != "x86_64") #  or build.settings['build_type'] not in build_types
     else:
-        builder.remove_build_if(lambda build: build.settings['arch'] != "x86_64" or build.settings['build_type'] not in build_types)
+        builder.remove_build_if(lambda build: build.settings['arch'] != "x86_64")
 
     builder.run()
 
