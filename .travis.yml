@@ -6,14 +6,14 @@ notifications:
 sudo: false
 dist: trusty
 services:
-  - docker
+- docker
 
 matrix:
   include:
   - os: linux
     compiler: clang-5
-    env:
-      CXX=clang++-5
+    env: 
+      CXX=clang++-5 
       CC=clang-5
 
   - os: linux
@@ -23,8 +23,14 @@ matrix:
       CC=gcc
 
 script:
-  - docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e "TRAVIS_TAG" bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
+- docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e "TRAVIS_TAG"
+  bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
+
 before_script:
-  - docker pull bentou/ubuntuartfuldev
-  - docker ps -a
-  - mkdir bin
+- docker pull bentou/ubuntuartfuldev
+- docker ps -a
+- mkdir bin
+
+env:
+  matrix:
+    secure: 1CZ8NaIBvbIu1lFuECnrVZY3fd7CK0ZFJP+cPjDcsXKy3PET2K+7KCv4nn20Vwgewd7dxGXumYyieTyjrfovjMlSKys/1SrUw9ggOsEJhqVIT3BmiKAhDfcDFG1vwUAoRrkuuuaEMxsUUF6tlGyBNLq2nuYQBmwAYhAplvFsD6ck6qwN//GIpliLLov7YeZ5rUxK8rE+szWUnwEZo4RwGNcyKsSULHIjKg+s2satxWPlr1FQd4PhlOt4TFsjfUX1j4lBBeVS7VALpsXy0rw9TGsV39ABwZ1U0TnRI4dzqNmpkC5yKqvOUWMmrzMJNw0FZpZHzHtJHrX18BLz4/7vZC3pTmWar34y2U0Ib7uz4fV2NYslCqpYu3DttJitsi4V9awX1CkKN/WT7DC8fzIXT2MxZ0bxlJ/aIcHgq2ieaWZZ5NCQEB8Pk6dNWy6Ee6cjwR4LMiWxgFYz8YDRDo6dW6bvlcNcT2X9AQV7oEalvchmy9trd8BCQ/E5dVX9kV7QLlokSJYlAohUCtZCfl2Bb861ko7CxQLW57s2g/RzWLlLUyYAlst/3tkDDcMOZ58i/sW5e45cAmrdNzJXF6878IiSeTBGIYrjO1GpLNerYpsaca8I57jFRgQXY+4fdkgz7A3wmxDTpuIUuchdJW+jc/1WSELIcfkHqTsq5mIeQKY=
