@@ -1,7 +1,7 @@
 #!/bin/python3
 from cpt.packager import ConanMultiPackager
 from conans import tools
-import os, sys
+import os, sys, platform
 
 DEBUG_MODE = False
 GIT_DIR = "eastl-source"
@@ -10,17 +10,21 @@ STABLE_IN_GIT = True
 def createBuilder(channel, commit, password, version):
     branch_pattern = 'release*' # channel is set explicitly!
     username = "bentoudev"
+    build_types = ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"],
 
     if not "CONAN_VISUAL_VERSION" in os.environ:
         visual_versions = ["15","16"]
     else:
-        visual_versions = [os.environ["CONAN_VISUAL_VERSION"]]
+        ver = os.environ["CONAN_VISUAL_VERSION"]
+        visual_versions = [ver]
+        print(" [info] Selected Visual Studio version " + ver)
 
     if password:
         return ConanMultiPackager(username=username,
                 channel=channel,
                 stable_branch_pattern=branch_pattern,
                 visual_versions=visual_versions,
+                build_types=build_types,
 
                 upload="https://api.bintray.com/conan/bentoudev/yage",
                 password=password)
@@ -28,7 +32,8 @@ def createBuilder(channel, commit, password, version):
         return ConanMultiPackager(username=username,
                 channel=channel,
                 stable_branch_pattern=branch_pattern,
-                visual_versions=visual_versions)
+                visual_versions=visual_versions,
+                build_types=build_types)
 
 def build(channel, commit, password, version):
 
@@ -37,8 +42,20 @@ def build(channel, commit, password, version):
 
     builder = createBuilder(channel, commit, password, version)
 
-    builder.add_common_builds()
-    builder.add(settings={"arch": "x86_64", "build_type": "Release"},
+    compiler = None
+
+    if platform.system() != "Windows":
+        if 'CXX' in os.environ and os.environ['CXX'].startswith('clang'):
+            compiler = "clang"
+        else:
+            compiler = "gcc"
+
+    settings = {"arch": "x86_64"}
+
+    if compiler:
+        settings['compiler'] = compiler
+
+    builder.add(settings=settings,
                 options={},
                 env_vars={},
                 build_requires={})
@@ -97,8 +114,6 @@ def execute(password):
 
         if 'TRAVIS' in os.environ:
             print(" [info] Welcome, Travis!")
-            os.environ['CXX'] = 'clang++-5.0'
-            os.environ['CC'] = 'clang-5.0'
             if 'TRAVIS_TAG' in os.environ:
                 version = os.environ['TRAVIS_TAG']
             if 'TRAVIS_COMMIT' in os.environ:
