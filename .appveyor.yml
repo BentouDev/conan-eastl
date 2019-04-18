@@ -1,0 +1,30 @@
+environment:
+  PYTHON: "C:\\Python37"
+  REPOSITORY_KEY:
+    secure: 3jorWUxqWjnR0X8Ye5NsAurPzickp84H2a+/ILwlRA3EQXzv+jo+kv9tvI1YKyTE
+
+cache:
+  - '%LOCALAPPDATA%\pip\Cache'
+
+platform: x64
+
+matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      CONAN_VISUAL_VERSIONS: 15
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019 Preview
+      CONAN_VISUAL_VERSIONS: 16
+
+install:
+  - git submodule update --init --recursive
+  - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
+  # Conan
+  - cmd: pip.exe install conan --quiet --upgrade --upgrade-strategy only-if-needed
+  - cmd: pip.exe install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
+  - cmd: refreshenv
+  - cmd: conan user # It creates the conan data directory
+
+build_script:
+  - cmd: conan --version
+  - cmd: git describe
+  - cmd: git rev-parse HEAD
+  - cmd: python build.py %REPOSITORY_KEY%

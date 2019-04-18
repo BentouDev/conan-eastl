@@ -1,0 +1,30 @@
+language: cpp
+
+notifications:
+  email: false
+
+sudo: false
+dist: trusty
+services:
+  - docker
+
+matrix:
+  include:
+  - os: linux
+    compiler: clang-5
+    env:
+      CXX=clang++-5
+      CC=clang-5
+
+  - os: linux
+    compiler: gcc-6
+    env:
+      CXX=g++
+      CC=gcc
+
+script:
+  - docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e "TRAVIS_TAG" bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
+before_script:
+  - docker pull bentou/ubuntuartfuldev
+  - docker ps -a
+  - mkdir bin
