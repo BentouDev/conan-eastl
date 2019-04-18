@@ -24,6 +24,4 @@ install:
 
 build_script:
   - cmd: conan --version
-  - cmd: git describe
-  - cmd: git rev-parse HEAD
   - cmd: python build.py %REPOSITORY_KEY%
