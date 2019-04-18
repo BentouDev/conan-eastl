@@ -21,9 +21,11 @@ class EASTLConan(ConanFile):
 
     def package_id(self):
         self.info.include_build_settings()
-        del self.info.settings.compiler
-        del self.info.settings.arch
-        del self.info.settings.build_type
+        self.info.settings.compiler
+        self.info.settings.arch
+        self.info.settings.build_type
+        if 'CXX' in os.environ and os.environ['CXX'].startswith('clang'):
+            del self.settings.compiler.libcxx
 
     def build(self):
         cmake = CMake(self)
