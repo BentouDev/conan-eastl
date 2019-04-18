@@ -22,7 +22,7 @@ def createBuilder(channel, commit, password, version):
                 stable_branch_pattern=branch_pattern,
                 visual_versions=visual_versions,
 
-                upload="https://api.bintray.com/conan/bentoudev/eastl",
+                upload="https://api.bintray.com/conan/bentoudev/yage",
                 password=password)
     else:
         return ConanMultiPackager(username=username,
