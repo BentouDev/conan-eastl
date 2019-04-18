@@ -12,18 +12,17 @@ matrix:
   include:
   - os: linux
     compiler: clang-5
-    env: 
-      CXX=clang++-5 
-      CC=clang-5
+    env: CXX=clang++-5 CC=clang-5
+    script:
+    - docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e
+      "TRAVIS_TAG" bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
 
   - os: linux
     compiler: gcc-6
-    env:
-      CXX=g++
-      CC=gcc
-
-script:
-- docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e "TRAVIS_TAG" bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
+    env: CXX=g++ CC=gcc
+    script:
+    - docker run --tty=false -it -v $PWD:/src --workdir /src -e "CI" -e "TRAVIS" -e
+      "TRAVIS_TAG" bentou/ubuntuartfuldev python3 ./build.py $REPOSITORY_KEY
 
 before_script:
 - docker pull bentou/ubuntuartfuldev
@@ -32,4 +31,5 @@ before_script:
 
 env:
   matrix:
-    secure: 1CZ8NaIBvbIu1lFuECnrVZY3fd7CK0ZFJP+cPjDcsXKy3PET2K+7KCv4nn20Vwgewd7dxGXumYyieTyjrfovjMlSKys/1SrUw9ggOsEJhqVIT3BmiKAhDfcDFG1vwUAoRrkuuuaEMxsUUF6tlGyBNLq2nuYQBmwAYhAplvFsD6ck6qwN//GIpliLLov7YeZ5rUxK8rE+szWUnwEZo4RwGNcyKsSULHIjKg+s2satxWPlr1FQd4PhlOt4TFsjfUX1j4lBBeVS7VALpsXy0rw9TGsV39ABwZ1U0TnRI4dzqNmpkC5yKqvOUWMmrzMJNw0FZpZHzHtJHrX18BLz4/7vZC3pTmWar34y2U0Ib7uz4fV2NYslCqpYu3DttJitsi4V9awX1CkKN/WT7DC8fzIXT2MxZ0bxlJ/aIcHgq2ieaWZZ5NCQEB8Pk6dNWy6Ee6cjwR4LMiWxgFYz8YDRDo6dW6bvlcNcT2X9AQV7oEalvchmy9trd8BCQ/E5dVX9kV7QLlokSJYlAohUCtZCfl2Bb861ko7CxQLW57s2g/RzWLlLUyYAlst/3tkDDcMOZ58i/sW5e45cAmrdNzJXF6878IiSeTBGIYrjO1GpLNerYpsaca8I57jFRgQXY+4fdkgz7A3wmxDTpuIUuchdJW+jc/1WSELIcfkHqTsq5mIeQKY=
+  - secure: 1CZ8NaIBvbIu1lFuECnrVZY3fd7CK0ZFJP+cPjDcsXKy3PET2K+7KCv4nn20Vwgewd7dxGXumYyieTyjrfovjMlSKys/1SrUw9ggOsEJhqVIT3BmiKAhDfcDFG1vwUAoRrkuuuaEMxsUUF6tlGyBNLq2nuYQBmwAYhAplvFsD6ck6qwN//GIpliLLov7YeZ5rUxK8rE+szWUnwEZo4RwGNcyKsSULHIjKg+s2satxWPlr1FQd4PhlOt4TFsjfUX1j4lBBeVS7VALpsXy0rw9TGsV39ABwZ1U0TnRI4dzqNmpkC5yKqvOUWMmrzMJNw0FZpZHzHtJHrX18BLz4/7vZC3pTmWar34y2U0Ib7uz4fV2NYslCqpYu3DttJitsi4V9awX1CkKN/WT7DC8fzIXT2MxZ0bxlJ/aIcHgq2ieaWZZ5NCQEB8Pk6dNWy6Ee6cjwR4LMiWxgFYz8YDRDo6dW6bvlcNcT2X9AQV7oEalvchmy9trd8BCQ/E5dVX9kV7QLlokSJYlAohUCtZCfl2Bb861ko7CxQLW57s2g/RzWLlLUyYAlst/3tkDDcMOZ58i/sW5e45cAmrdNzJXF6878IiSeTBGIYrjO1GpLNerYpsaca8I57jFRgQXY+4fdkgz7A3wmxDTpuIUuchdJW+jc/1WSELIcfkHqTsq5mIeQKY=
+  - secure: oem3fVi9LtFrI96i0FcZHQckU4s8fc5Ua3VBmkuPF+QIvuMkujqJzj0T2mg3T+EQn0MjXFtseQfmcss2+Ekk3F8tOJJvKk6Aiz3PU61pixRoka5RukshcRCE2GUJuEP2q9A+ZRGq0VqCmKDaybNRw+pRUOT+bj0ARwBwSsPCFizpveexu9pFutWeoJJ1ZUzqYy8HmgjHafqDw87FtYnnQktdjop4jU4Zgo7E/Rd1Cl74U7s0G34uRztIg0h7bsROF046ji6iTxBx03UYVCE41ydmLJnxvzOCEzIMI+IRKlTxwTY5x1GZUq6d7iU2zXF8iWWTsMdhKjU7VIHVGHXxiLy1Au7p5nvax9KEn9Eeuha3pe0HUekzvGW1DzU4LfAELkiSIMOmCpeIcaTEuxt875KhoiitKhdaFRTYlogRUw7Jvm1Br7QaBvh6Ku4MkbGTE5P8BJJHL2SeuaVl1g2ftYDQtM1JyW+vPcTb13xRBuXOOXivHyUYO0JLmBstFrFsZ+Mjqm9XG6+ZsqItHlI9VvmGHbkdTUiUdFO2XpryH0niR80PlFT5dV+e2mUxKuLNTuRFbVG338Y1dPvjjtq4sG3n39iqq+mPsLlWBo9hFkeclGuS5ydpzLheyEon4F9f9uyhiW8X8spHsBhKlyN/j5iAW2IVudzU6wC05zrW8JU=
