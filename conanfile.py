@@ -12,7 +12,7 @@ class EASTLConan(ConanFile):
     commit = eastl_commit
 
     description = "EASTL stands for Electronic Arts Standard Template Library. It is an extensive and robust implementation that has an emphasis on high performance."
-    settings = "os", "compiler", "compiler.libcxx", "build_type", "arch"
+    settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["eastl-source/*"]
 
@@ -24,8 +24,8 @@ class EASTLConan(ConanFile):
         self.info.settings.compiler
         self.info.settings.arch
         self.info.settings.build_type
-        #if 'CXX' in os.environ and os.environ['CXX'].startswith('clang'):
-        #    del self.settings.compiler.libcxx
+        if 'CXX' in os.environ and os.environ['CXX'].startswith('clang'):
+            self.settings.compiler.libcxx = 'libc++'
 
     def build(self):
         cmake = CMake(self)
