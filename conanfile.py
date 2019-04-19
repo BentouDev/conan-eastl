@@ -5,7 +5,7 @@ eastl_version = os.getenv('EASTL_VERSION', '0.0')
 eastl_commit = os.getenv('EASTL_COMMIT', '')
 
 class EASTLConan(ConanFile):
-    name = "EASTL"
+    name = "eastl"
     license = "MIT"
     url = "https://github.com/BentouDev/conan-eastl"
     version = eastl_version
