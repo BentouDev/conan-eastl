@@ -26,6 +26,11 @@ class EASTLConan(ConanFile):
         self.info.settings.build_type
 
     def build(self):
+        cmake_path = '"C:/Program Files/CMake/bin/cmake.exe"'
+        if os.path.isfile(cmake_path):
+            print (' [DEBUG] Forcing CMake : ' + cmake_path)
+            os.environ['CONAN_CMAKE_PROGRAM'] = cmake_path
+
         cmake = CMake(self)
         #cmake.definitions['EASTL_VERSION'] = self.version
         #cmake.definitions['EASTL_COMMIT'] = self.commit
