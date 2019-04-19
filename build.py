@@ -51,6 +51,11 @@ def build(channel, commit, password, version):
             print (' [*] Selected gcc')
 
     builder.add_common_builds()
+
+    for build in builder.builds:
+        if build.settings['compiler'].startswith('clang'):
+            build.settings['compiler.libcxx'] = 'libc++'
+
     if compiler:
         builder.remove_build_if(lambda build: build.settings['compiler'] != compiler or build.settings['arch'] != "x86_64") #  or build.settings['build_type'] not in build_types
     else:
