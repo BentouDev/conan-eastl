@@ -25,7 +25,8 @@ class EASTLConan(ConanFile):
         self.info.settings.arch
         self.info.settings.build_type
         if 'CXX' in os.environ and os.environ['CXX'].startswith('clang'):
-            self.settings.compiler.libcxx = 'libc++'
+            print('baka')
+        self.settings.compiler.libcxx = 'libc++'
 
     def build(self):
         cmake = CMake(self)
