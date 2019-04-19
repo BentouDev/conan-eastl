@@ -52,14 +52,16 @@ def build(channel, commit, password, version):
 
     builder.add_common_builds()
 
-    for build in builder.builds:
-        if build.settings['compiler'].startswith('clang'):
-            build.settings['compiler.libcxx'] = 'libc++'
+    filtered_builds = []
 
-    if compiler:
-        builder.remove_build_if(lambda build: build.settings['compiler'] != compiler or build.settings['arch'] != "x86_64") #  or build.settings['build_type'] not in build_types
-    else:
-        builder.remove_build_if(lambda build: build.settings['arch'] != "x86_64")
+    for settings, options, env_vars, build_requires, reference in builder.items:
+        if settings['compiler'].startswith('clang'):
+            settings['compiler.libcxx'] = 'libc++'
+        if compiler:
+            if settings['arch'] == "x86_64" and (not compiler or settings['compiler'] == compiler):
+                filtered_builds.append([settings, options, env_vars, build_requires, reference])
+
+    builder.builds = filtered_builds
 
     builder.run()
 
