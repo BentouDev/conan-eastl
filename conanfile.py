@@ -23,20 +23,21 @@ class EASTLConan(ConanFile):
     
     if 'CXX' in os.environ:
         _compiler = os.environ['CXX']
-        print(' [error] Defined CXX=' + _compiler)
+        print(' [info] Defined CXX=' + _compiler)
     else:
         print(' [warn] No CXX defined! ' + _compiler + ' detected!')
         _compiler = settings.compiler
 
-    if _compiler.startswith('clang'):
-        settings.compiler.libcxx = 'libc++'
-        print (' [info] Clang detected, enforcing libc++')
-        
     def package_id(self):
         self.info.include_build_settings()
         self.info.settings.compiler
         self.info.settings.arch
         self.info.settings.build_type
+
+        if _compiler.startswith('clang'):
+            print (' [info] Clang detected, enforcing libc++')
+            self.settings.compiler.libcxx = 'libc++'
+
 
     def build(self):
         cmake = CMake(self)
