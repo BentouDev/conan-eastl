@@ -26,10 +26,10 @@ class EASTLConan(ConanFile):
         print(' [error] Defined CXX=' + _compiler)
     else:
         print(' [warn] No CXX defined! ' + _compiler + ' detected!')
-        _compiler = self.settings.compiler
+        _compiler = settings.compiler
 
     if _compiler.startswith('clang'):
-        self.settings.compiler.libcxx = 'libc++'
+        settings.compiler.libcxx = 'libc++'
         print (' [info] Clang detected, enforcing libc++')
         
     def package_id(self):
