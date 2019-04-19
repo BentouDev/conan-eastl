@@ -19,14 +19,19 @@ class EASTLConan(ConanFile):
     options = {"build_type": ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"]}
     default_options = "build_type=MinSizeRel",
     
+    _compiler = None
+    
     if 'CXX' in os.environ:
         _compiler = os.environ['CXX']
         print(' [error] Defined CXX=' + _compiler)
-        if _compiler.startswith('clang'):
-            self.settings.compiler.libcxx = 'libc++'
     else:
-        print(' [warn] No CXX defined!')
+        print(' [warn] No CXX defined! ' + _compiler + ' detected!')
+        _compiler = self.settings.compiler
 
+    if _compiler.startswith('clang'):
+        self.settings.compiler.libcxx = 'libc++'
+        print (' [info] Clang detected, enforcing libc++')
+        
     def package_id(self):
         self.info.include_build_settings()
         self.info.settings.compiler
