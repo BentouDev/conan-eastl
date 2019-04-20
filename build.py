@@ -136,9 +136,12 @@ def execute(password):
         if STABLE_IN_GIT:
             channel = 'stable'
         ver_parts = version.split('-1-')
-        if len(ver_parts) > 1 and build_number:
-            # Fix semvar
-            version = ver_parts[0] + '.' + build_number
+        if len(ver_parts) > 1:
+            if build_number:
+                # Fix semvar
+                version = ver_parts[0] + '.' + build_number
+            else:
+                version = ver_parts[0] + '-dev'
     else:
         channel = 'stable'
 
