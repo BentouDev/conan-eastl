@@ -25,7 +25,11 @@ install:
   - cmd: choco upgrade cmake
   - ps: if ($env:CONAN_VISUAL_VERSIONS -eq 16)
         {
-          choco install visualstudio2019buildtools visualstudio2019-workload-vctools
+          choco install visualstudio2019buildtools \
+              --package-parameters \ 
+              "--add Microsoft.VisualStudio.Workload.VCTools \
+              --includeRecommended --quiet --locale en-US" \
+              --confirm
         }
   - cmd: conan user # It creates the conan data directory
   # Workaround - copy fallback settings with Visual Studio 2019 enabled
