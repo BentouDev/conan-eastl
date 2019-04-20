@@ -32,6 +32,7 @@ matrix:
     before_script:
       - choco upgrade cmake
       - choco install visualstudio2019buildtools
+      - conan user # Creates user profile and directory
       - mv conan-fallback-settings.yml $USERPROFILE/.conan/settings.yml
     script:
       - python ./build.py $REPOSITORY_KEY
