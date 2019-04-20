@@ -37,7 +37,9 @@ matrix:
       - choco upgrade cmake
       - choco install visualstudio2019buildtools
       - choco install python
+      - refreshenv
       - choco install pip
+      - refreshenv
       - pip install conan --quiet --upgrade --upgrade-strategy only-if-needed
       - pip install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
       - refreshenv
