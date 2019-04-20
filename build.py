@@ -139,7 +139,7 @@ def execute(password):
         if len(ver_parts) > 1:
             if build_number:
                 # Fix semvar
-                version = ver_parts[0] + '.' + build_number
+                version = ver_parts[0] + '+' + build_number
             else:
                 version = ver_parts[0] + '-dev'
     else:
