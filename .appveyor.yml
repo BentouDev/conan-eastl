@@ -14,9 +14,6 @@ cache:
 
 platform: x64
 
-artifacts:
-  - path:
-
 install:
   - git submodule update --init --recursive
   - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
@@ -44,4 +41,4 @@ build_script:
 
 on_failure:
   - ps: |
-      Push-AppveyorArtifact "ChocoLog" "C:\ProgramData\chocolatey\logs\chocolatey.log"
+      Push-AppveyorArtifact "C:\ProgramData\chocolatey\logs\chocolatey.log" -FileName "chocolatey.log"
