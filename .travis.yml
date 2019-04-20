@@ -41,12 +41,12 @@ matrix:
       - choco install visualstudio2019buildtools
       - choco install visualstudio2019-workload-vctools 
       - choco install python
-      - exec bash
+      - . ~/.bashrc
       - choco install pip
-      - exec bash
+      - . ~/.bashrc
       - pip install conan --quiet --upgrade --upgrade-strategy only-if-needed
       - pip install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
-      - exec bash
+      - . ~/.bashrc
       - conan user # Creates user profile and directory
       - mv conan-fallback-settings.yml $USERPROFILE/.conan/settings.yml
     script:
