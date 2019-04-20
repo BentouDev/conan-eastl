@@ -30,7 +30,10 @@ matrix:
   - os: windows
     cache:
       directories:
+        - C:\ProgramData\chocolatey\lib
         - /c/ProgramData/chocolatey/lib
+        - C:\Users\travis\AppData\Local\Temp\chocolatey
+        - /c/Users/travis/AppData/Local/Temp/chocolatey
         - '%LOCALAPPDATA%\pip'
     env: CONAN_VISUAL_VERSIONS=16
     before_script:
