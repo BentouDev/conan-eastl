@@ -21,11 +21,12 @@ install:
   - cmd: pip.exe install conan --quiet --upgrade --upgrade-strategy only-if-needed
   - cmd: pip.exe install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
   - cmd: refreshenv
+  # Workaround - force update cmake
+  - cmd: choco upgrade cmake
+  - cmd: choco install visualstudio2019buildtools
   - cmd: conan user # It creates the conan data directory
   # Workaround - copy fallback settings with Visual Studio 2019 enabled
   - cmd: move conan-fallback-settings.yml %USERPROFILE%/.conan/settings.yml
-  # Workaround - force update cmake
-  - cmd: choco upgrade cmake
 
 build_script:
   - cmd: conan --version
