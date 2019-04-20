@@ -30,14 +30,16 @@ matrix:
   - os: windows
     cache:
       directories:
-        - C:\ProgramData\chocolatey\lib
+        - /c/ProgramData/chocolatey/lib
         - '%LOCALAPPDATA%\pip'
     env: CONAN_VISUAL_VERSIONS=16
     before_script:
       - choco upgrade cmake
       - choco install visualstudio2019buildtools
       - choco install python
+      - refreshenv
       - choco install pip
+      - refreshenv
       - pip install conan --quiet --upgrade --upgrade-strategy only-if-needed
       - pip install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
       - refreshenv
