@@ -29,8 +29,8 @@ matrix:
         bentou/ubuntu-bionic-dev python3 ./build.py $REPOSITORY_KEY
   - os: windows
     before_script:
-      - choco install visualstudio2019buildtools --version 16.0.1.0
       - choco upgrade cmake
+      - choco install visualstudio2019buildtools
       - export CONAN_VISUAL_VERSIONS=16
       - mv conan-fallback-settings.yml $USERPROFILE/.conan/settings.yml
     script:
