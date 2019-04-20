@@ -28,10 +28,19 @@ matrix:
       - docker run -e "CI" -e "TRAVIS" -e "TRAVIS_TAG" -e "CXX" -e "CC" --tty=false -it -v $PWD:/src --workdir /src
         bentou/ubuntu-bionic-dev python3 ./build.py $REPOSITORY_KEY
   - os: windows
+    cache:
+      directories:
+        - C:\ProgramData\chocolatey\lib
+        - '%LOCALAPPDATA%\pip'
     env: CONAN_VISUAL_VERSIONS=16
     before_script:
       - choco upgrade cmake
       - choco install visualstudio2019buildtools
+      - choco install python
+      - choco install pip
+      - pip install conan --quiet --upgrade --upgrade-strategy only-if-needed
+      - pip install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
+      - refreshenv
       - conan user # Creates user profile and directory
       - mv conan-fallback-settings.yml $USERPROFILE/.conan/settings.yml
     script:

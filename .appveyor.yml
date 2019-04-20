@@ -9,7 +9,8 @@ environment:
       CONAN_VISUAL_VERSIONS: 16
 
 cache:
-  - '%LOCALAPPDATA%\pip\Cache'
+  - C:\ProgramData\chocolatey\lib
+  - '%LOCALAPPDATA%\pip'
 
 platform: x64
 
