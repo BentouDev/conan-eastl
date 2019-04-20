@@ -3,8 +3,8 @@ environment:
   REPOSITORY_KEY:
     secure: 3jorWUxqWjnR0X8Ye5NsAurPzickp84H2a+/ILwlRA3EQXzv+jo+kv9tvI1YKyTE
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      CONAN_VISUAL_VERSIONS: 15
+    # - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    #   CONAN_VISUAL_VERSIONS: 15
     - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019 Preview
       CONAN_VISUAL_VERSIONS: 16
 
@@ -23,14 +23,7 @@ install:
   - cmd: refreshenv
   # Workaround - force update cmake and visual for 2019 support
   - cmd: choco upgrade cmake
-  - ps: if ($env:CONAN_VISUAL_VERSIONS -eq 16)
-        {
-          choco install visualstudio2019buildtools \
-            --package-parameters \ 
-            "--add Microsoft.VisualStudio.Workload.VCTools
-            --includeRecommended --quiet --locale en-US" \
-            --confirm
-        }
+  - ps: setup_vs.ps1
   - cmd: conan user # It creates the conan data directory
   # Workaround - copy fallback settings with Visual Studio 2019 enabled
   - cmd: move conan-fallback-settings.yml %USERPROFILE%/.conan/settings.yml
