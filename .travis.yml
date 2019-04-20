@@ -39,13 +39,14 @@ matrix:
     before_script:
       - choco upgrade cmake
       - choco install visualstudio2019buildtools
+      - choco install visualstudio2019-workload-vctools 
       - choco install python
-      - refreshenv
+      - exec bash
       - choco install pip
-      - refreshenv
+      - exec bash
       - pip install conan --quiet --upgrade --upgrade-strategy only-if-needed
       - pip install conan_package_tools --quiet --upgrade --upgrade-strategy only-if-needed
-      - refreshenv
+      - exec bash
       - conan user # Creates user profile and directory
       - mv conan-fallback-settings.yml $USERPROFILE/.conan/settings.yml
     script:
