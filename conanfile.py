@@ -26,6 +26,9 @@ class EASTLConan(ConanFile):
         self.info.settings.build_type
 
     def source(self):
+        if platform.system() != "Windows":
+            return
+
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
         tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
