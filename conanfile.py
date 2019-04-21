@@ -26,10 +26,13 @@ class EASTLConan(ConanFile):
         self.info.settings.build_type
 
     def build(self):
-        cmake_path = '"C:/Program Files/CMake/bin/cmake.exe"'
+        print (' [DEBUG] Searching for CMake at standard path...')
+        cmake_path = '"C:\\Program Files\\CMake\\bin\\cmake.exe"'
         if os.path.isfile(cmake_path):
             print (' [DEBUG] Forcing CMake : ' + cmake_path)
             os.environ['CONAN_CMAKE_PROGRAM'] = cmake_path
+        else:
+            print (' [DEBUG] Not found CMake at standard path! Aquired version is ' + CMake.get_version())
 
         cmake = CMake(self)
         #cmake.definitions['EASTL_VERSION'] = self.version
