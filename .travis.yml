@@ -12,10 +12,10 @@ env:
 matrix:
   include:
   - os: linux
-    compiler: clang-5
+    compiler: clang
     env: CXX=clang++ CC=clang
   - os: linux
-    compiler: gcc-6
+    compiler: gcc
     env: CXX=g++ CC=gcc
 
 before_script:
