@@ -1,4 +1,4 @@
-from conans import ConanFile, CMake
+from conans import ConanFile, CMake, tools
 import os, platform
 
 eastl_version = os.getenv('EASTL_VERSION', '0.0')
@@ -25,7 +25,17 @@ class EASTLConan(ConanFile):
         self.info.settings.arch
         self.info.settings.build_type
 
+    def fix_linkage(self):
+        # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
+        # if the packaged project doesn't have variables to set it properly
+        tools.replace_in_file("%s/CMakeLists.txt" % ("assimp-source"), "PROJECT( Assimp )", 
+
+"""PROJECT( Assimp )
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()""")
+
     def build(self):
+        self.fix_linkage()
         # Workaround for conan choosing cmake embedded in Visual Studio
         if platform.system() == "Windows" and 'AZURE' in os.environ:
             cmake_path = '"C:\\Program Files\\CMake\\bin\\cmake.exe"'
