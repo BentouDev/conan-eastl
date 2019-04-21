@@ -54,12 +54,20 @@ def build(channel, commit, password, version):
 
     filtered_builds = []
 
-    for settings, options, env_vars, build_requires, reference in builder.items:
-        if settings['compiler'].startswith('clang'):
-            settings['compiler.libcxx'] = 'libc++'
+    # compiler_version = '0.0'
 
-        if settings['arch'] == "x86_64" and (not compiler or settings['compiler'] == compiler):
-            filtered_builds.append([settings, options, env_vars, build_requires, reference])
+    # for settings, _, _, _, _ in builder.items:
+    #     _ver = settings['compiler.version']
+    #     if _ver > compiler_version:
+    #         compiler_version = _ver
+
+    for settings, options, env_vars, build_requires, reference in builder.items:
+        #if compiler_version == 0 or str(compiler_version) == settings['compiler.version']:
+            if settings['compiler'].startswith('clang'):
+                settings['compiler.libcxx'] = 'libc++'
+
+            if settings['arch'] == "x86_64" and (not compiler or settings['compiler'] == compiler):
+                filtered_builds.append([settings, options, env_vars, build_requires, reference])
 
     builder.builds = filtered_builds
 
@@ -115,8 +123,8 @@ def execute(password):
                 version = os.environ['APPVEYOR_REPO_TAG_NAME']
             if 'APPVEYOR_REPO_COMMIT' in os.environ:
                 commit = os.environ['APPVEYOR_REPO_COMMIT']
-            if 'APPVEYOR_BUILD_NUMBER' in os.environ:
-                build_number = os.environ['APPVEYOR_BUILD_NUMBER']
+            #if 'APPVEYOR_BUILD_NUMBER' in os.environ:
+            #    build_number = os.environ['APPVEYOR_BUILD_NUMBER']
 
         if 'TRAVIS' in os.environ:
             print(" [info] Welcome, Travis!")
@@ -124,13 +132,13 @@ def execute(password):
                 version = os.environ['TRAVIS_TAG']
             if 'TRAVIS_COMMIT' in os.environ:
                 commit = os.environ['TRAVIS_COMMIT']
-            if 'TRAVIS_BUILD_NUMBER' in os.environ:
-                build_number = os.environ['TRAVIS_BUILD_NUMBER']
+            #if 'TRAVIS_BUILD_NUMBER' in os.environ:
+            #    build_number = os.environ['TRAVIS_BUILD_NUMBER']
 
         if 'AZURE' in os.environ:
             print (" [info] Welcome, Azure Dev Ops!")
-            if 'AZURE_BUILD_NUMBER' in os.environ:
-                build_number = os.environ['AZURE_BUILD_NUMBER']
+            #if 'AZURE_BUILD_NUMBER' in os.environ:
+            #    build_number = os.environ['AZURE_BUILD_NUMBER']
 
     if not version or not commit:
         print (' [*] Attempt to get version from git...')

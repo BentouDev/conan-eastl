@@ -25,14 +25,14 @@ class EASTLConan(ConanFile):
         self.info.settings.arch
         self.info.settings.build_type
 
-#     def source(self):
-#         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
-#         # if the packaged project doesn't have variables to set it properly
-#         tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
+    def source(self):
+        # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
+        # if the packaged project doesn't have variables to set it properly
+        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
 
-# """PROJECT(EASTL)
-# include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-# conan_basic_setup()""")
+"""project(EASTL CXX)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()""")
 
     def build(self):
         # Workaround for conan choosing cmake embedded in Visual Studio
@@ -42,6 +42,10 @@ class EASTLConan(ConanFile):
             os.environ['CONAN_CMAKE_PROGRAM'] = cmake_path
 
         cmake = CMake(self)
+        #cmake.definitions['CMAKE_CXX_COMPILER_ID'] = 'gcc'#self.settings.compiler
+        #cmake.definitions['CMAKE_CC_COMPILER'] = self.settings.compiler
+        #cmake.definitions['CMAKE_CC_COMPILER_VERSION'] = self.settings.compiler.version
+        #cmake.definitions['CMAKE_CXX_COMPILER_VERSION'] = self.settings.compiler.version
         #cmake.definitions['EASTL_VERSION'] = self.version
         #cmake.definitions['EASTL_COMMIT'] = self.commit
         #cmake.definitions['EASTL_CHANNEL'] = self.channel
