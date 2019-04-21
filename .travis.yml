@@ -13,9 +13,10 @@ matrix:
   include:
   - os: linux
     compiler: clang-5
-
+    env: CXX=clang++ CC=clang
   - os: linux
     compiler: gcc-6
+    env: CXX=g++ CC=gcc
 
 before_script:
   - docker pull bentou/ubuntu-bionic-dev
