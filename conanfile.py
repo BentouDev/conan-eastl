@@ -28,7 +28,7 @@ class EASTLConan(ConanFile):
     def fix_linkage(self):
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
-        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "PROJECT(EASTL)", 
+        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
 
 """PROJECT(EASTL)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
