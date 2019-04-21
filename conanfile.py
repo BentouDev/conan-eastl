@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-import os
+import os, platform
 
 eastl_version = os.getenv('EASTL_VERSION', '0.0')
 eastl_commit = os.getenv('EASTL_COMMIT', '')
@@ -26,13 +26,14 @@ class EASTLConan(ConanFile):
         self.info.settings.build_type
 
     def build(self):
-        print (' [DEBUG] Searching for CMake at standard path...')
-        cmake_path = '"C:\\Program Files\\CMake\\bin\\cmake.exe"'
-        if os.path.isfile(cmake_path):
+        if platform.system() == "Windows":
+        #print (' [DEBUG] Searching for CMake at standard path...')
+            cmake_path = '"C:\\Program Files\\CMake\\bin\\cmake.exe"'
+        #if os.path.isfile(cmake_path):
             print (' [DEBUG] Forcing CMake : ' + cmake_path)
             os.environ['CONAN_CMAKE_PROGRAM'] = cmake_path
-        else:
-            print (' [DEBUG] Not found CMake at standard path! Aquired version is ' + CMake.get_version())
+        #else:
+        #    print (' [DEBUG] Not found CMake at standard path! Aquired version is ' + CMake.get_version())
 
         cmake = CMake(self)
         #cmake.definitions['EASTL_VERSION'] = self.version
