@@ -14,18 +14,15 @@ matrix:
   - os: linux
     compiler: clang-5
     env: CXX=clang++-5 CC=clang-5
-    before_script:
-      - docker pull bentou/ubuntu-bionic-dev
-      - docker ps -a
-      - mkdir bin
 
   - os: linux
     compiler: gcc-6
     env: CXX=g++ CC=gcc
-    before_script:
-      - docker pull bentou/ubuntu-bionic-dev
-      - docker ps -a
-      - mkdir bin
+
+before_script:
+  - docker pull bentou/ubuntu-bionic-dev
+  - docker ps -a
+  - mkdir bin
 
 script:
   - docker run -e "CI" -e "TRAVIS" -e "TRAVIS_TAG" -e "TRAVIS_BUILD_NUMBER" -e "CXX" -e "CC" -e "REPOSITORY_KEY" --tty=false -it -v $PWD:/src --workdir /src
