@@ -31,6 +31,7 @@ class EASTLConan(ConanFile):
 
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
+        print (' [*] Injecting conanbuildinfo.cmake...')
         tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
 
 """project(EASTL CXX)
@@ -58,6 +59,7 @@ conan_basic_setup()""")
     def package(self):
         self.copy("*.h", src="eastl-source/test/packages/EABase/include/Common/EABase", dst="include/EABase", keep_path=True)
         self.copy("*.h", src="eastl-source/include", dst="include", keep_path=True)
+        self.copy("*.natvis", src="eastl-source/doc", dst="lib", keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
