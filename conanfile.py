@@ -61,6 +61,7 @@ conan_basic_setup()""")
         self.copy("*.h", src="eastl-source/include", dst="include", keep_path=True)
         self.copy("*.natvis", src="eastl-source/doc", dst="lib", keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.pdb", dst="pdb", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
