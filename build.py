@@ -3,7 +3,7 @@ from cpt.packager import ConanMultiPackager
 from conans import tools
 import os, sys, platform
 
-DEBUG_MODE = False
+DEBUG_MODE = True
 PACKAGE_NAME = 'eastl'
 GIT_DIR = "eastl-source"
 STABLE_IN_GIT = True
