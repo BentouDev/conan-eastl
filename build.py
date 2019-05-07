@@ -65,12 +65,18 @@ def build(channel, commit, password, version):
     #         compiler_version = _ver
 
     for settings, options, env_vars, build_requires, reference in builder.items:
-        #if compiler_version == 0 or str(compiler_version) == settings['compiler.version']:
+        if settings['arch'] == "x86_64" and (not compiler or settings['compiler'] == compiler):
+
             if settings['compiler'].startswith('clang'):
                 settings['compiler.libcxx'] = 'libc++'
-
-            if settings['arch'] == "x86_64" and (not compiler or settings['compiler'] == compiler):
                 filtered_builds.append([settings, options, env_vars, build_requires, reference])
+
+                settings['compiler.libcxx'] = 'libstdc++'
+                filtered_builds.append([settings, options, env_vars, build_requires, reference])
+
+            else:
+                filtered_builds.append([settings, options, env_vars, build_requires, reference])
+
 
     builder.builds = filtered_builds
 
