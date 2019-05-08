@@ -16,8 +16,8 @@ class EASTLConan(ConanFile):
     generators = "cmake"
     exports_sources = ["eastl-source/*"]
 
-    options = {"build_type": ["Release", "Debug", "RelWithDebInfo", "MinSizeRel"]}
-    default_options = "build_type=MinSizeRel",
+    options = {}
+    default_options = ""
 
     def package_id(self):
         self.info.include_build_settings()
