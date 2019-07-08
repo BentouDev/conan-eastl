@@ -40,7 +40,8 @@ def createBuilder(channel, commit, password, version):
     return ConanMultiPackager(username=username,
             channel=channel,
             stable_branch_pattern=branch_pattern,
-            visual_versions=visual_versions)
+            visual_versions=visual_versions,
+            build_types=build_types)
 
 def build(channel, commit, password, version):
     os.environ['EASTL_COMMIT'] = commit
