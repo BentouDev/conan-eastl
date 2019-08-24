@@ -47,6 +47,7 @@ conan_basic_setup()""")
         #cmake.definitions['EASTL_VERSION'] = self.version
         #cmake.definitions['EASTL_COMMIT'] = self.commit
         #cmake.definitions['EASTL_CHANNEL'] = self.channel
+        cmake.definitions['EASTL_BUILD_TESTS'] = False
         cmake.configure(source_folder="eastl-source")
         cmake.build()
 
