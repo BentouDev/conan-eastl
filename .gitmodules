@@ -1,6 +1,6 @@
-[submodule "eastl-source"]
-	path = eastl-source
-	url = https://github.com/electronicarts/EASTL.git
 [submodule "conan-base"]
 	path = conan-base
 	url = https://github.com/BentouDev/conan-base.git
+[submodule "eastl-source"]
+	path = eastl-source
+	url = https://github.com/electronicarts/EASTL.git
