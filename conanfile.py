@@ -17,7 +17,7 @@ class EASTLConan(ConanFile):
     exports_sources = ["eastl-source/*"]
 
     options = {}
-    default_options = ""
+    default_options = {}
 
     def source(self):
         if platform.system() != "Windows":
@@ -26,7 +26,7 @@ class EASTLConan(ConanFile):
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
         print (' [*] Injecting conanbuildinfo.cmake...')
-        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
+        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL CXX)", 
 
 """project(EASTL CXX)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
