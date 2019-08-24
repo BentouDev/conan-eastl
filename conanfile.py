@@ -26,11 +26,12 @@ class EASTLConan(ConanFile):
         # This small hack might be useful to guarantee proper /MT /MD linkage in MSVC
         # if the packaged project doesn't have variables to set it properly
         print (' [*] Injecting conanbuildinfo.cmake...')
-        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL)", 
+        tools.replace_in_file("%s/CMakeLists.txt" % ("eastl-source"), "project(EASTL CXX)", 
 
-"""project(EASTL)
+"""project(EASTL CXX)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()""")
+conan_basic_setup()
+add_definitions(-DEASTL_EABASE_DISABLED)""")
 
     def build(self):
         # Workaround for conan choosing cmake embedded in Visual Studio
@@ -47,7 +48,7 @@ conan_basic_setup()""")
         #cmake.definitions['EASTL_VERSION'] = self.version
         #cmake.definitions['EASTL_COMMIT'] = self.commit
         #cmake.definitions['EASTL_CHANNEL'] = self.channel
-        cmake.definitions['EASTL_BUILD_TESTS'] = False
+        cmake.definitions['EASTL_BUILD_TESTS'] = True
         cmake.configure(source_folder="eastl-source")
         cmake.build()
 
@@ -61,3 +62,4 @@ conan_basic_setup()""")
 
     def package_info(self):
         self.cpp_info.libs = [ self.name ]
+        # self.cpp_info.defines = ["EASTL_EABASE_DISABLED"]
