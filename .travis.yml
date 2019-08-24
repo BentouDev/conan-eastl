@@ -24,7 +24,8 @@ matrix:
 
 before_script:
 # EASTL submodules are broken (cyclic?) so we need to update them manually
-  - cd eastl-source && git submodule update --init && cd ..
+  - git submodule update --init 
+  - cd /src/eastl-source && git submodule update --init && cd ..
   - docker pull bentou/ubuntu-bionic-dev
   - docker ps -a
   - mkdir bin
