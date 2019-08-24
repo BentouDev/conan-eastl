@@ -23,7 +23,8 @@ matrix:
     env: CXX=g++ CC=gcc
 
 before_script:
-  - git submodule update --init
+# EASTL submodules are broken (cyclic?) so we need to update them manually
+  - cd eastl-source && git submodule update --init && cd ..
   - docker pull bentou/ubuntu-bionic-dev
   - docker ps -a
   - mkdir bin
