@@ -20,7 +20,7 @@ clone_script:
   - cmd: cd %APPVEYOR_BUILD_FOLDER%
   - cmd: git checkout -qf %APPVEYOR_REPO_COMMIT%
   - cmd: git submodule update --init
-  - cmd: cd eastl-sources && git submodule update --init && cd ..
+  - cmd: cd eastl-source && git submodule update --init && cd ..
 
 cache:
   - C:\ProgramData\chocolatey\lib
